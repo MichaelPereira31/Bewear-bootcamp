@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 import { PasswordInput } from "./password-input";
 
@@ -36,6 +39,7 @@ const formSchema = z.object({
 });
 
 const SignInForm = () => {
+  const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,8 +48,24 @@ const SignInForm = () => {
     },
   });
 
-  function onSubmit(values: FormValues) {
-    console.log(values);
+  async function onSubmit(values: FormValues) {
+    const { email, password } = values;
+    await authClient.signIn.email({
+      password,
+      email,
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (err) => {
+          if (err.error.code === "INVALID_EMAIL_OR_PASSWORD") {
+            toast.error("E-mail ou senha invalida");
+            return;
+          }
+          toast.error(err.error.message);
+        },
+      },
+    });
   }
   return (
     <Form {...form}>

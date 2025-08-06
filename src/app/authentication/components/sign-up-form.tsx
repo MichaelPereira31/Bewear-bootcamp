@@ -77,6 +77,7 @@ const SignUpForm = () => {
             form.setError("email", {
               message: "Email ja cadastrado",
             });
+            return;
           }
           toast.error(err.error.message);
         },
