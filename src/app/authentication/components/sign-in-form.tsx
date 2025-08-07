@@ -67,6 +67,16 @@ const SignInForm = () => {
       },
     });
   }
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+      });
+    } catch {
+      toast.error("Erro ao fazer login com Google");
+    }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -109,8 +119,18 @@ const SignInForm = () => {
               )}
             />
           </CardContent>
-          <CardFooter>
-            <Button type="submit">Entrar</Button>
+          <CardFooter className="flex w-full flex-col gap-4">
+            <Button type="submit" className="w-full">
+              Entrar
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleGoogleSignIn}
+              className="w-full"
+            >
+              Entrar com Google
+            </Button>
           </CardFooter>
         </Card>
       </form>
