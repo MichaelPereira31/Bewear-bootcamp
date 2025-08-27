@@ -1,12 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
-import { addProductToCart } from "@/actions/cart/add-cart-product";
-import { decreaseCartProductQuantity } from "@/actions/cart/decrease-cart-product-quantity";
-import { removeProductFromCart } from "@/actions/cart/remove-cart-product";
 import { formatCentsToBRL } from "@/app/helpers/money";
+import { useDecreaseProductQuantity } from "@/hooks/mutations/decrease-product-quantity";
+import { useIncrementProductQuantity } from "@/hooks/mutations/increase-cart-product-quantity";
+import { useRemoveProductFromCart } from "@/hooks/mutations/remove-product-from-cart";
 
 import { Button } from "../ui/button";
 
@@ -29,28 +28,10 @@ const CartItem = ({
   productVariantPriceInCents,
   quantity,
 }: CartItemProps) => {
-  const queryClient = useQueryClient();
-  const removeProductFromCartMutation = useMutation({
-    mutationKey: ["remove-cart-product", id],
-    mutationFn: () => removeProductFromCart({ cartItemId: id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-  const decreaseProductQuantityMutation = useMutation({
-    mutationKey: ["decrease-cart-product-quantity", id],
-    mutationFn: () => decreaseCartProductQuantity({ cartItemId: id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-  const increaseCartProductQuantityMutation = useMutation({
-    mutationKey: ["increase-cart-product-quantity", id],
-    mutationFn: () => addProductToCart({ productVariantId, quantity: 1 }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
+  const removeProductFromCartMutation = useRemoveProductFromCart(id);
+  const decreaseProductQuantityMutation = useDecreaseProductQuantity(id);
+  const increaseCartProductQuantityMutation =
+    useIncrementProductQuantity(productVariantId);
 
   const handleRemoveProductFromCart = () => {
     removeProductFromCartMutation.mutate(undefined, {
@@ -80,7 +61,7 @@ const CartItem = ({
   };
 
   return (
-    <div className="flex items-center justify-between p-2 gap-2 ">
+    <div className="flex items-center justify-between gap-2 p-2">
       <div className="flex items-center gap-4">
         <Image
           src={productVariantImageUrl.match(/https?:\/\/[^"]+/)?.[0] as string}
