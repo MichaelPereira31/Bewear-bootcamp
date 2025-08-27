@@ -3,6 +3,7 @@ import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
+import { addProductToCart } from "@/actions/cart/add-cart-product";
 import { decreaseCartProductQuantity } from "@/actions/cart/decrease-cart-product-quantity";
 import { removeProductFromCart } from "@/actions/cart/remove-cart-product";
 import { formatCentsToBRL } from "@/app/helpers/money";
@@ -13,6 +14,7 @@ interface CartItemProps {
   id: string;
   productName: string;
   productVariantName: string;
+  productVariantId: string;
   productVariantImageUrl: string;
   productVariantPriceInCents: number;
   quantity: number;
@@ -22,6 +24,7 @@ const CartItem = ({
   id,
   productName,
   productVariantName,
+  productVariantId,
   productVariantImageUrl,
   productVariantPriceInCents,
   quantity,
@@ -37,6 +40,13 @@ const CartItem = ({
   const decreaseProductQuantityMutation = useMutation({
     mutationKey: ["decrease-cart-product-quantity", id],
     mutationFn: () => decreaseCartProductQuantity({ cartItemId: id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+  const increaseCartProductQuantityMutation = useMutation({
+    mutationKey: ["increase-cart-product-quantity", id],
+    mutationFn: () => addProductToCart({ productVariantId, quantity: 1 }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
@@ -61,8 +71,16 @@ const CartItem = ({
     });
   };
 
+  const handleIncreaseProductQuantity = () => {
+    increaseCartProductQuantityMutation.mutate(undefined, {
+      onError: () => {
+        toast.error("Erro ao aumentar quantidade do produto");
+      },
+    });
+  };
+
   return (
-    <div className="flex items-center justify-between p-2">
+    <div className="flex items-center justify-between p-2 gap-2 ">
       <div className="flex items-center gap-4">
         <Image
           src={productVariantImageUrl.match(/https?:\/\/[^"]+/)?.[0] as string}
@@ -85,7 +103,11 @@ const CartItem = ({
               <MinusIcon />
             </Button>
             <p className="text-xs font-medium">{quantity}</p>
-            <Button className="h-4 w-4" variant="ghost" onClick={() => {}}>
+            <Button
+              className="h-4 w-4"
+              variant="ghost"
+              onClick={handleIncreaseProductQuantity}
+            >
               <PlusIcon />
             </Button>
           </div>
