@@ -1,6 +1,7 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { addProductToCart } from "@/actions/cart/add-cart-product";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ const AddToCartButton = ({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
-    }
+    },
   });
   return (
     <Button
@@ -32,7 +33,13 @@ const AddToCartButton = ({
       size={"lg"}
       variant={"ghost"}
       disabled={isPending}
-      onClick={() => mutate()}
+      onClick={() =>
+        mutate(undefined, {
+          onSuccess: () => {
+            toast.success("Produto adicionado ao carrinho");
+          },
+        })
+      }
     >
       {isPending && <Loader2 className="anumate-spin" />}
       Adicionar a sacola
