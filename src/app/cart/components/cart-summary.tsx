@@ -24,7 +24,7 @@ const getSafeImageUrl = (url: string) => {
     // Verifica se é uma URL válida
     new URL(decodedUrl);
     return decodedUrl;
-  } catch (_) {
+  } catch {
     return null;
   }
 };
@@ -35,13 +35,13 @@ const CartSummary = ({
   products,
 }: CartSummaryProps) => {
   return (
-    <Card className="w-full">
+    <Card className=" w-full">
       <CardHeader className="pb-4 md:pb-6 lg:pb-7">
         <CardTitle className="text-lg md:text-xl lg:text-2xl">
           Resumo do pedido
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 md:space-y-6 lg:space-y-7">
+      <CardContent>
         {/* Resumo de valores */}
         <div className="space-y-3 md:space-y-4 lg:space-y-5">
           <div className="flex items-center justify-between">

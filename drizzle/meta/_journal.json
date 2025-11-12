@@ -22,6 +22,13 @@
       "when": 1759969481246,
       "tag": "0002_mute_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1762989961946,
+      "tag": "0003_majestic_talkback",
+      "breakpoints": true
     }
   ]
 }
