@@ -71,7 +71,10 @@ const ProductItem = ({ product, textContainerClassName }: ProductItemProps) => {
   const finalImageUrl = imageError ? "/placeholder-image.svg" : imageUrl;
 
   return (
-    <Link href={`/product-variant/${firstVariant.slug}`} className="flex flex-col gap-4">
+    <Link
+      href={`/product-variant/${firstVariant.slug}`}
+      className="flex flex-col gap-4"
+    >
       <Image
         src={finalImageUrl}
         alt={firstVariant.name}

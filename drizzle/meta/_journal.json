@@ -15,6 +15,13 @@
       "when": 1754604143887,
       "tag": "0001_salty_marrow",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759969481246,
+      "tag": "0002_mute_squirrel_girl",
+      "breakpoints": true
     }
   ]
 }
