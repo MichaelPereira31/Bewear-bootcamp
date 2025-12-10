@@ -1,6 +1,5 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { useState } from "react";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
@@ -47,7 +46,19 @@ const ConfirmationPage = async () => {
   return (
     <div>
       <Header />
-      <div className="mx-auto w-full space-y-4 px-5 sm:max-w-[540px] sm:px-4 sm:py-6 md:max-w-[768px] md:px-4 md:py-6 lg:flex lg:max-w-[1024px] lg:gap-8 lg:px-4 lg:py-8 xl:max-w-[1280px]">
+      <div className="mx-auto w-full space-y-4 px-5 lg:max-w-[1024px] lg:gap-8 lg:px-4 lg:py-8">
+        <CartSummary
+          subtotalInCents={cartTotalInCents}
+          totalInCents={cartTotalInCents}
+          products={cart.items.map((item) => ({
+            id: item.productVariant.id,
+            name: item.productVariant.product.name,
+            variantName: item.productVariant.name,
+            quantity: item.quantity,
+            priceInCents: item.productVariant.priceInCents,
+            imageUrl: item.productVariant.imageUrl,
+          }))}
+        />
         <Card className="h-full">
           <CardHeader>
             <CardTitle>Identificação</CardTitle>
@@ -106,31 +117,19 @@ const ConfirmationPage = async () => {
                     </label>
                     <p className="text-xs leading-relaxed text-gray-600">
                       Confirmo que estou ciente de que o{" "}
-                      <strong>valor final do frete será calculado</strong>
-                      {" "}pelo nosso consultor com base na minha localização e que
-                      serei contactado para confirmação do pedido e finalização
-                      do pagamento.
+                      <strong>valor final do frete será calculado</strong> pelo
+                      nosso consultor com base na minha localização e que serei
+                      contactado para confirmação do pedido e finalização do
+                      pagamento.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <FinishOrderButton/>
+              <FinishOrderButton />
             </CardContent>
           </CardContent>
         </Card>
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
       </div>
       <div className="mt-12">
         <Footer />

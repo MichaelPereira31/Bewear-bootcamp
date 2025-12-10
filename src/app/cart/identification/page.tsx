@@ -47,12 +47,8 @@ const IdentificationPage = async () => {
     <div>
       <Header />
       <div className="w-full flex justify-center">
-        <div className="w-full  xl:max-w-[1280px] lg:flex lg:gap-8 lg:px-4 lg:py-8 lg:max-w-[1024px] md:px-4 md:py-6 md:max-w-[768px] sm:px-4 sm:py-6 sm:max-w-[540px] px-4 py-6">
-          <Addresses
-            shippingAddresses={shippingAddresses}
-            defaultShippingAddressId={cart.shippingAddress?.id || null}
-          />
-          <CartSummary
+        <div className="w-full lg:flex-col lg:gap-2 lg:px-4 lg:py-8 lg:max-w-[1024px]">
+           <CartSummary
             subtotalInCents={cartTotalInCents}
             totalInCents={cartTotalInCents}
             products={cart.items.map((item) => ({
@@ -64,6 +60,11 @@ const IdentificationPage = async () => {
               imageUrl: item.productVariant.imageUrl,
             }))}
           />
+          <Addresses
+            shippingAddresses={shippingAddresses}
+            defaultShippingAddressId={cart.shippingAddress?.id || null}
+          />
+         
         </div>
       </div>
       <div className="mt-12">

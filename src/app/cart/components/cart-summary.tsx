@@ -35,7 +35,7 @@ const CartSummary = ({
   products,
 }: CartSummaryProps) => {
   return (
-    <Card className=" w-full">
+    <Card className="w-full lg:mb-5 ">
       <CardHeader className="pb-4 md:pb-6 lg:pb-7">
         <CardTitle className="text-lg md:text-xl lg:text-2xl">
           Resumo do pedido

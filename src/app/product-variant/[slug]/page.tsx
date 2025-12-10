@@ -40,7 +40,7 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
     <>
       <Header />
       <div className="flex flex-col space-y-6 py-5">
-        <div className="relative h-[300px] w-full rounded-3xl">
+        <div className="relative h-[300px] w-full rounded-3xl lg:max-w-[1024px] lg:mx-auto lg:min-h-[500px]">
           <Image
             src={
               productVariant.imageUrl.match(/https?:\/\/[^"]+/)?.[0] as string
@@ -50,7 +50,7 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
             className="object-cover"
           />
         </div>
-        <div className="space-y-4 px-5">
+        <div className="space-y-4 px-5 w-full lg:max-w-[1024px] lg:mx-auto">
           <VariantSelector
             variants={productVariant.product.variants}
             selectedVariant={productVariant.slug}

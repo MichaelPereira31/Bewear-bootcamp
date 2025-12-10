@@ -11,7 +11,7 @@ const Authentication = () => {
     <>
       <Header />
       <div className="flex items-center justify-center">
-        <div className="flex w-full flex-col gap-6 p-5">
+        <div className="flex w-full flex-col gap-6 p-5 lg:max-w-[640px] mx-auto">
           <Tabs defaultValue="sign-in">
             <TabsList>
               <TabsTrigger value="sign-in">Entrar</TabsTrigger>
