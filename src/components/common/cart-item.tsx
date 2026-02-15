@@ -3,7 +3,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 import { formatCentsToBRL } from "@/app/helpers/money";
-import { useDecreaseProductQuantity } from "@/hooks/mutations/decrease-product-quantity";
+import { useDecreaseCartProduct } from "@/hooks/mutations/decrease-product-quantity";
 import { useIncrementProductQuantity } from "@/hooks/mutations/increase-cart-product-quantity";
 import { useRemoveProductFromCart } from "@/hooks/mutations/remove-product-from-cart";
 
@@ -29,7 +29,7 @@ const CartItem = ({
   quantity,
 }: CartItemProps) => {
   const removeProductFromCartMutation = useRemoveProductFromCart(id);
-  const decreaseProductQuantityMutation = useDecreaseProductQuantity(id);
+  const decreaseProductQuantityMutation = useDecreaseCartProduct(id);
   const increaseCartProductQuantityMutation =
     useIncrementProductQuantity(productVariantId);
 

@@ -12,7 +12,7 @@ export const useRemoveProductFromCart = (cartItemId: string) => {
     mutationKey: getUseRemoveProductFromCartQueryKey(cartItemId),
     mutationFn: () => removeProductFromCart({ cartItemId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: getUseCartQueryKey });
+      queryClient.invalidateQueries({ queryKey: getUseCartQueryKey() });
     },
   });
 };

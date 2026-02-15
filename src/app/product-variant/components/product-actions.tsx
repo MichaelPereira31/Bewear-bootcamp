@@ -10,7 +10,7 @@ interface ProductActionsProps {
   productVariantId: string;
 }
 const ProductActions = ({ productVariantId }: ProductActionsProps) => {
-  const initialQuantity = 30;
+  const initialQuantity = process.env.MIN_QUANTITY ? parseInt(process.env.MIN_QUANTITY) : 1;
   const [quantity, setQuantity] = useState(initialQuantity);
   return (
     <>
